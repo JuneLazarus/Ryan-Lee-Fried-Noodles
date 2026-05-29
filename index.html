@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>李睿安炒面学院</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #f5f5f5; }
+    
+    .top-header {
+      height: 90px; background: white; display: flex; justify-content: space-between; align-items: center; 
+      padding: 0 80px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .logo-area { display: flex; align-items: center; gap: 15px; }
+    .logo-area img { width: 60px; border-radius: 50%; }
+    .logo-area h1 { color: #8B0000; font-size: 22px; }
+    .logo-area p { color: #888; font-size: 14px; }
+    .header-right { text-align: right; }
+    .current-time { color: #666; font-size: 14px; display: block; margin-bottom: 10px; }
+    
+    .nav { background: #8B0000; padding: 15px 80px; }
+    .nav a { color: white; text-decoration: none; margin-right: 30px; font-size: 16px; }
+    .nav a:hover { color: #ffd04b; }
+    
+    .hero {
+      height: 500px; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+        url('assets/banner.png');
+      background-size: cover; background-position: center; color: white;
+      display: flex; flex-direction: column; justify-content: center; padding-left: 120px;
+    }
+    .hero h1 { font-size: 56px; margin-bottom: 20px; }
+    .hero p { font-size: 24px; margin-bottom: 30px; }
+    .hero-btns button { padding: 12px 30px; font-size: 16px; border: none; cursor: pointer; }
+    .hero-btns .btn-danger { background: #dc3545; color: white; margin-right: 15px; }
+    .hero-btns .btn-outline { background: transparent; color: white; border: 2px solid white; }
+    
+    .container { max-width: 1400px; margin: -60px auto 0; position: relative; z-index: 10; padding: 0 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .card { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 2px 15px rgba(0,0,0,0.08); }
+    .card h3 { color: #8B0000; margin-bottom: 15px; }
+    .card img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .news-list { list-style: none; padding: 0; }
+    .news-list li { padding: 10px 0; border-bottom: 1px dashed #eee; cursor: pointer; }
+    .news-list li:hover { color: #8B0000; }
+    .admission-badge { background: linear-gradient(135deg, #9b0000, #6e0000); color: white; text-align: center; 
+      padding: 30px; border-radius: 10px; font-size: 28px; }
+    
+    .course-section, .admission-section { padding: 60px 0; }
+    .section-header { text-align: center; margin-bottom: 40px; }
+    .section-header h2 { color: #8B0000; font-size: 32px; margin-bottom: 10px; }
+    .section-header p { color: #666; }
+    
+    .course-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1400px; margin: auto; padding: 0 20px; }
+    .course-card { background: white; border-radius: 15px; overflow: hidden; }
+    .course-card img { width: 100%; height: 200px; object-fit: cover; }
+    .course-info { padding: 20px; }
+    .course-info h3 { color: #333; margin-bottom: 10px; }
+    .course-teacher { color: #8B0000; font-size: 14px; margin-bottom: 10px; }
+    .course-desc { color: #666; font-size: 14px; }
+    
+    .admission-banner { background: linear-gradient(135deg, #8B0000, #a52a2a); color: white; 
+      text-align: center; padding: 40px; border-radius: 15px; margin-bottom: 30px; }
+    .admission-banner h3 { font-size: 28px; margin-bottom: 10px; }
+    .admission-banner button { background: white; color: #8B0000; border: none; padding: 12px 30px; 
+      font-size: 16px; border-radius: 5px; cursor: pointer; }
+    .admission-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1400px; margin: auto; padding: 0 20px; }
+    .admission-card { background: white; border-radius: 15px; padding: 30px; text-align: center; }
+    .admission-card h3 { color: #8B0000; margin-bottom: 15px; }
+    .admission-card p { color: #666; margin-bottom: 20px; }
+    
+    .spirit { background: white; padding: 60px; margin-top: 50px; }
+    .spirit-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+    .spirit-grid div { text-align: center; padding: 30px; background: #fafafa; border-radius: 15px; }
+    .spirit-grid h3 { color: #8B0000; font-size: 24px; margin-bottom: 10px; }
+    .spirit-grid p { color: #666; }
+    
+    .footer { background: #8B0000; color: white; padding: 40px 80px; display: flex; justify-content: space-between; }
+    .footer h3 { margin-bottom: 20px; }
+    .footer p { opacity: 0.8; margin: 10px 0; }
+    
+    @media (max-width: 768px) {
+      .top-header { flex-direction: column; padding: 15px; height: auto; }
+      .logo-area { text-align: center; }
+      .hero { padding-left: 20px; height: 400px; }
+      .hero h1 { font-size: 36px; }
+      .hero p { font-size: 18px; }
+      .grid-4 { grid-template-columns: 1fr; }
+      .course-grid, .admission-cards, .spirit-grid { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-header">
+    <div class="logo-area">
+      <img src="assets/logo.png" alt="李睿安炒面学院">
+      <div>
+        <h1>李睿安炒面学院</h1>
+        <p>Li Rui'an Fried Noodle Academy</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="current-time" id="current-time"></span>
+      <button onclick="showLogin()">登录</button>
+      <button onclick="toggleLocale()" style="margin-left: 10px;">EN</button>
+    </div>
+  </header>
+  
+  <nav class="nav">
+    <a href="#">首页</a>
+    <a href="#">学院简介</a>
+    <a href="#">学术研究</a>
+    <a href="#">炒面课程</a>
+    <a href="#">师资队伍</a>
+    <a href="#">校园文化</a>
+    <a href="#">招生信息</a>
+    <a href="#">联系我们</a>
+  </nav>
+  
+  <section class="hero">
+    <h1>北大南门 · 物院风味</h1>
+    <p>让每一口炒面，都有家的温度</p>
+    <div class="hero-btns">
+      <button class="btn-danger">了解学院</button>
+      <button class="btn-outline">查看课程</button>
+    </div>
+  </section>
+  
+  <div class="container">
+    <div class="grid-4">
+      <div class="card">
+        <h3>学院新闻</h3>
+        <ul class="news-list">
+          <li>李睿安炒面学院揭牌仪式圆满举行</li>
+          <li>北大南门美食文化节圆满落幕</li>
+          <li>学院师生赴各地美食节交流</li>
+          <li>炒面工程学研究取得新突破</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>特色课程</h3>
+        <img src="assets/course.jpg" alt="炒面课程">
+        <p>锅气掌控与火候进阶课程</p>
+      </div>
+      <div class="card">
+        <h3>名师风采</h3>
+        <img src="assets/teacher.jpg" alt="李睿安教授">
+        <p>李睿安教授 - 创院院长</p>
+      </div>
+      <div class="card">
+        <h3>招生公告</h3>
+        <div class="admission-badge">2026招生进行中</div>
+      </div>
+    </div>
+  </div>
+  
+  <section class="course-section">
+    <div class="section-header">
+      <h2>特色课程</h2>
+      <p>传承炒面文化，培养创新人才</p>
+    </div>
+    <div class="course-grid">
+      <div class="course-card">
+        <img src="assets/course.jpg" alt="炒面制作">
+        <div class="course-info">
+          <h3>经典炒面制作工艺与实践</h3>
+          <p class="course-teacher">李睿安教授</p>
+          <p class="course-desc">学习传统炒面制作技术与火候控制</p>
+        </div>
+      </div>
+      <div class="course-card">
+        <img src="assets/course.jpg" alt="锅气">
+        <div class="course-info">
+          <h3>锅气掌控与火候进阶</h3>
+          <p class="course-teacher">李睿安教授</p>
+          <p class="course-desc">研究锅气形成机理及应用</p>
+        </div>
+      </div>
+      <div class="course-card">
+        <img src="assets/course.jpg" alt="创新">
+        <div class="course-info">
+          <h3>风味创新与地域融合探索</h3>
+          <p class="course-teacher">李睿安教授</p>
+          <p class="course-desc">探索炒面创新发展方向</p>
+        </div>
+      </div>
+      <div class="course-card">
+        <img src="assets/course.jpg" alt="AI炒面">
+        <div class="course-info">
+          <h3>人工智能炒面系统</h3>
+          <p class="course-teacher">李睿安教授</p>
+          <p class="course-desc">AI辅助炒面技术研究</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="admission-section">
+    <div class="section-header">
+      <h2>招生信息</h2>
+      <p>欢迎报考李睿安炒面学院</p>
+    </div>
+    <div style="max-width: 1400px; margin: auto; padding: 0 20px;">
+      <div class="admission-banner">
+        <h3>2026年招生进行中</h3>
+        <p>本科招生 · 研究生招生 · 暑期体验营</p>
+        <button>立即报名</button>
+      </div>
+      <div class="admission-cards">
+        <div class="admission-card">
+          <h3>本科招生简章</h3>
+          <p>炒面工程学专业招生</p>
+          <p>截止日期：2026-06-30</p>
+        </div>
+        <div class="admission-card">
+          <h3>研究生招生</h3>
+          <p>锅气动力学方向</p>
+          <p>截止日期：2026-12-31</p>
+        </div>
+        <div class="admission-card">
+          <h3>暑期体验营</h3>
+          <p>炒面爱好者体验活动</p>
+          <p>截止日期：2026-05-31</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="spirit">
+    <h2 style="text-align: center; color: #8B0000; margin-bottom: 40px;">学院精神</h2>
+    <div class="spirit-grid">
+      <div><h3>人文为本</h3><p>厚德博学，知行合一</p></div>
+      <div><h3>匠心为要</h3><p>精益求精，追求卓越</p></div>
+      <div><h3>实践为先</h3><p>在烟火中学习，在实践中成长</p></div>
+      <div><h3>创新为魂</h3><p>融合创新，风味无界</p></div>
+      <div><h3>分享为乐</h3><p>让美食连接你我</p></div>
+    </div>
+  </section>
+  
+<footer class="footer">
+
+  <div>
+    <h3>李睿安炒面学院</h3>
+    <p>北京大学南门炒面研究基地</p>
+    <p>邮编：100871</p>
+  </div>
+
+  <div>
+    <p>电话：010-88888888</p>
+    <p>Email：noodles@friednoodle.edu.cn</p>
+    <p>微信公众号：李睿安炒面学院</p>
+  </div>
+
+  <div>
+    <p>© 2026 李睿安炒面学院</p>
+    <p>All Rights Reserved</p>
+  </div>
+
+</footer>
+
+  <script>
+    function updateTime() {
+      const now = new Date();
+      document.getElementById('current-time').textContent = now.toLocaleString('zh-CN');
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+    
+    function showLogin() {
+      alert('登录功能演示\n用户名: admin\n密码: 123456');
+    }
+    
+    function toggleLocale() {
+      alert('中英文切换功能演示');
+    }
+  </script>
+</body>
+</html>
